@@ -6,17 +6,11 @@ export default function Details() {
       </nav>
       <div className="bottom">
         <a
-          href="https://github.com/pmndrs/zustand/tree/main/examples/demo"
+          href="https://github.com/Azzellz/yuzutea"
           className="bottom-right"
         >
           {'<Source />'}
         </a>
-        {/* <a
-          href="https://www.instagram.com/tina.henschel/"
-          className="bottom-left"
-        >
-          Illustrations @ Tina Henschel
-        </a> */}
       </div>
       <span className="header-left">YuzuTea</span>
     </div>
