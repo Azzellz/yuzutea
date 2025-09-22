@@ -31,8 +31,8 @@ import bg1Url from '@/assets/image/bg1.png'
 import bg2Url from '@/assets/image/bg2.png'
 import '@/materials/layerMaterial'
 import { DomEvent } from '@react-three/fiber/dist/declarations/src/core/events'
-import { LYRICS } from '@/consts/lyrics'
 import InfoBox from './InfoBox'
+import { getRandomLyrics } from '@/consts/lyrics'
 
 // 定义层级配置的类型
 interface LayerConfig {
@@ -207,7 +207,7 @@ function FallbackScene() {
     >
       <img
         src="/ogimage.jpg"
-        alt="Zustand Bear"
+        alt="YuzuTea"
         style={{
           width: '100%',
           height: '100%',
@@ -218,6 +218,7 @@ function FallbackScene() {
   )
 }
 
+const LYRICS = getRandomLyrics()
 export default function Scene() {
   const [error, setError] = useState<Error | null>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -243,11 +244,7 @@ export default function Scene() {
         <Experience />
         <Effects />
       </Canvas>
-      <DialogBox
-        loop={true}
-        messages={LYRICS[0]}
-        mousePosition={mousePosition}
-      />
+      <DialogBox loop={true} messages={LYRICS} mousePosition={mousePosition} />
       <InfoBox mousePosition={mousePosition} parallaxIntensity={0.0075} />
     </div>
   )
