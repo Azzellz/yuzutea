@@ -1,0 +1,24 @@
+export default function Details() {
+  return (
+    <div className="main">
+      <nav className="nav">
+        <a href="https://github.com/Azzellz">Github</a>
+      </nav>
+      <div className="bottom">
+        <a
+          href="https://github.com/pmndrs/zustand/tree/main/examples/demo"
+          className="bottom-right"
+        >
+          {'<Source />'}
+        </a>
+        {/* <a
+          href="https://www.instagram.com/tina.henschel/"
+          className="bottom-left"
+        >
+          Illustrations @ Tina Henschel
+        </a> */}
+      </div>
+      <span className="header-left">YuzuTea</span>
+    </div>
+  )
+}

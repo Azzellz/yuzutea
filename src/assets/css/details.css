@@ -1,0 +1,43 @@
+span.header-left {
+  font-weight: 700;
+  text-transform: uppercase;
+  position: absolute;
+  display: inline-block;
+  top: 40px;
+  left: 40px;
+  font-size: 3em;
+  color: white;
+  line-height: 1em;
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  left: 40px;
+  position: fixed;
+  right: 40px;
+  top: 40px;
+}
+
+.nav a {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+a.bottom-left {
+  bottom: 40px;
+  left: 40px;
+}
+
+a.bottom-right {
+  bottom: 40px;
+  right: 40px;
+}
+
+@media only screen and (max-width: 700px) {
+  span.header-left {
+    font-size: 1em;
+  }
+}
