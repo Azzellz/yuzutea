@@ -1,6 +1,6 @@
 import { TransformHookProps, useTransform } from '@/hooks/transform'
 import Avatar from './Avatar'
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useTyped } from '@/hooks/typed'
 
 function About() {
@@ -47,7 +47,7 @@ interface Game {
   playtime_forever: number
 }
 function Game() {
-  const url = 'https://api.yuzutea.org/steam-web'
+  const url = '//api.yuzutea.org/steam-web'
   const [games, setGames] = useState<Game[]>([])
   useEffect(() => {
     fetch(url)
@@ -55,7 +55,7 @@ function Game() {
       .then((data) => {
         setGames(data.recently_games.games)
       })
-  }, [games])
+  }, [])
   const sortedGames = games.sort(
     (a, b) => b.playtime_forever - a.playtime_forever
   )
@@ -114,8 +114,32 @@ const InfoBox = memo((props: InfoBoxProps) => {
   const { transformStyle } = useTransform(props)
   const [index, setIndex] = useState(0)
 
+  const parentRef = useRef<HTMLDivElement>(null)
+  const [parentWidth, setParentWidth] = useState(0)
+
+  useLayoutEffect(() => {
+    console.log(parentWidth)
+    if (parentRef.current) {
+      setParentWidth(parentRef.current.offsetWidth)
+    }
+
+    // 如果父元素宽度可能变化，可以监听窗口大小变化
+    const handleResize = () => {
+      if (parentRef.current) {
+        setParentWidth(parentRef.current.offsetWidth)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
-    <div className="info-box" style={{ transform: transformStyle }}>
+    <div
+      ref={parentRef}
+      className="info-box"
+      style={{ transform: transformStyle }}
+    >
       <div className="options">
         {infoList.map((item, i) => (
           <Avatar
