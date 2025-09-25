@@ -69,7 +69,7 @@ function Experience() {
     () => ({
       count: 20,
       radius: 80,
-      colors: ['white', 'yellow', 'red'],
+      colors: ['white'],
     }),
     []
   )
