@@ -26,13 +26,15 @@ import DialogBox from './DialogBox'
 import bg0Url from '@/assets/image/bg0.png'
 import starsUrl from '@/assets/image/stars.png'
 import groundUrl from '@/assets/image/ground.png'
-import characterUrl from '@/assets/image/character.png'
+import characterPcUrl from '@/assets/image/character-pc.png'
+import characterMobileUrl from '@/assets/image/character-mobile.png'
 import bg1Url from '@/assets/image/bg1.png'
 import bg2Url from '@/assets/image/bg2.png'
 import '@/materials/layerMaterial'
 import { DomEvent } from '@react-three/fiber/dist/declarations/src/core/events'
 import InfoBox from './InfoBox'
 import { getRandomLyrics } from '@/consts/lyrics'
+import { isMobile } from '@/utils'
 
 // 定义层级配置的类型
 interface LayerConfig {
@@ -53,7 +55,7 @@ function Experience() {
     bg0Url,
     starsUrl,
     groundUrl,
-    characterUrl,
+    isMobile() ? characterMobileUrl : characterPcUrl,
     bg1Url,
     bg2Url,
   ])

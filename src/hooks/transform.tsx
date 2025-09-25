@@ -1,17 +1,17 @@
 import { useState, useMemo, useEffect } from 'react'
 
-export interface TransformHookProps {
+export interface TraceTransformHookProps {
   mousePosition?: { x: number; y: number }
   transformXRate?: number
   transformYRate?: number
   parallaxIntensity?: number
 }
-export function useTransform({
+export function useTraceTransform({
   mousePosition,
   transformXRate = 100,
   transformYRate = 100,
   parallaxIntensity = 0.02,
-}: TransformHookProps) {
+}: TraceTransformHookProps) {
   const [transform, setTransform] = useState({ x: 0, y: 0 })
 
   // 使用 useMemo 来避免每次渲染都创建新的默认对象

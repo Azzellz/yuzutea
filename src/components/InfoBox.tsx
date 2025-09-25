@@ -1,7 +1,9 @@
-import { TransformHookProps, useTransform } from '@/hooks/transform'
+import { TraceTransformHookProps, useTraceTransform } from '@/hooks/transform'
 import Avatar from './Avatar'
-import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useTyped } from '@/hooks/typed'
+import { useParentLayout } from '@/hooks/layout'
+import { INFO_BOX } from '@/consts/layout'
 
 function About() {
   const { el } = useTyped({
@@ -109,30 +111,11 @@ const infoList = [
   },
 ]
 
-interface InfoBoxProps extends TransformHookProps {}
+interface InfoBoxProps extends TraceTransformHookProps {}
 const InfoBox = memo((props: InfoBoxProps) => {
-  const { transformStyle } = useTransform(props)
+  const { transformStyle } = useTraceTransform(props)
   const [index, setIndex] = useState(0)
-
-  const parentRef = useRef<HTMLDivElement>(null)
-  const [parentWidth, setParentWidth] = useState(0)
-
-  useLayoutEffect(() => {
-    console.log(parentWidth)
-    if (parentRef.current) {
-      setParentWidth(parentRef.current.offsetWidth)
-    }
-
-    // 如果父元素宽度可能变化，可以监听窗口大小变化
-    const handleResize = () => {
-      if (parentRef.current) {
-        setParentWidth(parentRef.current.offsetWidth)
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const { parentRef, parentWidth } = useParentLayout<HTMLDivElement>()
 
   return (
     <div
@@ -141,23 +124,36 @@ const InfoBox = memo((props: InfoBoxProps) => {
       style={{ transform: transformStyle }}
     >
       <div className="options">
-        {infoList.map((item, i) => (
-          <Avatar
-            src={item.avatar}
-            alt={item.title}
-            shape="rounded"
-            onClick={() => setIndex(i)}
-            size={50}
-            style={{
-              border: index === i ? '2px solid #fff' : 'none',
-              transition: 'all 0.3s ease-out',
-              transform:
-                index === i
-                  ? `translateX(-${i * (50 + 10) + 100}px) scale(1.5)`
-                  : `translateX(${i < index ? `calc(50px + 10px)` : 0})`,
-            }}
-          />
-        ))}
+        {infoList.map((item, i) => {
+          const marginRight =
+            (infoList.length - i) * (INFO_BOX.iconWidth + INFO_BOX.iconGap) +
+            INFO_BOX.iconWidth
+          const selectedTranslateX =
+            parentWidth - marginRight + 2 * INFO_BOX.padding
+          const unselectedTranslateX =
+            i < index ? INFO_BOX.iconWidth + INFO_BOX.iconGap : 0
+
+          return (
+            <Avatar
+              key={item.title}
+              alt={item.title}
+              src={item.avatar}
+              shape="rounded"
+              onClick={() => setIndex(i)}
+              size={INFO_BOX.iconWidth}
+              style={{
+                border: index === i ? '2px solid #fff' : 'none',
+                transition: 'all 0.3s ease-out',
+                transform:
+                  index === i
+                    ? `translateX(-${selectedTranslateX}px) scale(${INFO_BOX.iconScale})`
+                    : `translateX(${
+                        i < index ? `${unselectedTranslateX}px` : 0
+                      })`,
+              }}
+            />
+          )
+        })}
       </div>
       <div className="title">
         <h2>{infoList[index].title}</h2>

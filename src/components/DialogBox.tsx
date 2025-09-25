@@ -1,10 +1,10 @@
-import { TransformHookProps, useTransform } from '@/hooks/transform'
+import { TraceTransformHookProps, useTraceTransform } from '@/hooks/transform'
 import { TypedHookProps, useTyped } from '@/hooks/typed'
 
-interface DialogBoxProps extends TransformHookProps, TypedHookProps {}
+interface DialogBoxProps extends TraceTransformHookProps, TypedHookProps {}
 export default function DialogBox(props: DialogBoxProps) {
   const { el } = useTyped(props)
-  const { transformStyle } = useTransform(props)
+  const { transformStyle } = useTraceTransform(props)
 
   return (
     <div

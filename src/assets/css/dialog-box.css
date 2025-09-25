@@ -78,8 +78,8 @@
 @media (max-width: 768px) {
   .dialog-box {
     bottom: 40px !important;
-    left: 20px !important;
-    right: 20px !important;
+    left: 50px !important;
+    right: 50px !important;
     transform: none !important;
     max-width: none !important;
     min-width: auto !important;
@@ -91,8 +91,8 @@
 @media (max-width: 480px) {
   .dialog-box {
     bottom: 20px !important;
-    left: 10px !important;
-    right: 10px !important;
+    left: 50px !important;
+    right: 50px !important;
     font-size: 12px !important;
     padding: 12px 16px !important;
   }
