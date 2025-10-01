@@ -1,4 +1,4 @@
-span.header-left {
+.logo {
   font-weight: 700;
   text-transform: uppercase;
   position: absolute;
@@ -38,5 +38,11 @@ a.source-right {
 @media only screen and (max-width: 700px) {
   span.header-left {
     font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 2em;
   }
 }
