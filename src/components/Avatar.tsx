@@ -407,7 +407,7 @@ const Avatar: React.FC<AvatarProps> = ({
       className={`avatar ${className || ''}`.trim()}
       style={{
         ...avatarStyle,
-        '&:hover .avatar-controls': {
+        '&:hover .avatarControls': {
           opacity: 1,
         }
       } as CSSProperties}
