@@ -32,7 +32,7 @@ import bg1Url from '@/assets/image/bg1.png'
 import bg2Url from '@/assets/image/bg2.png'
 import '@/materials/layerMaterial'
 import { DomEvent } from '@react-three/fiber/dist/declarations/src/core/events'
-import InfoBox from './InfoBox'
+import InfoBox from './info-box/InfoBox'
 import { getRandomLyrics } from '@/consts/lyrics'
 import { isMobile } from '@/utils'
 

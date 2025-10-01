@@ -2,12 +2,14 @@ import Details from './components/Details'
 import Scene from './components/Scene'
 import { RippleProvider } from './contexts/RippleContext'
 import RippleRenderer from './components/RippleRenderer'
+// import AudioVisualizerDemo from './components/AudioVisualizerDemo'
 
 export default function App() {
   return (
     <RippleProvider>
       <Scene />
       <Details />
+      {/* <AudioVisualizerDemo /> */}
       <RippleRenderer
         enableClick={true}
         clickOptions={{
