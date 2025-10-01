@@ -6,6 +6,7 @@ import {
   ReactNode,
   useCallback,
   useMemo,
+  useEffect
 } from 'react'
 import {
   createRoot,
@@ -48,7 +49,7 @@ interface LayerConfig {
   scale: [number, number, number]
 }
 
-function Experience() {
+function Experience({ gyroscope }: { gyroscope: { alpha: number; beta: number; gamma: number } }) {
   const scaleN = useAspect(1600, 1000, 1.05)
   const scaleW = useAspect(1600, 1000, 1.05)
   const textures = useTexture([
@@ -109,21 +110,35 @@ function Experience() {
   ]
 
   useFrame((state, _delta) => {
-    movement.lerp(temp.set(state.pointer.x, state.pointer.y * 0.2, 0), 0.2)
+    const { beta, gamma } = gyroscope
+    const isMobileDevice = isMobile()
+
+    // 陀螺仪影响因子
+    const gyroFactor = isMobileDevice ? 0.4 : 0
+
+    // 将陀螺仪数据映射到 -1 到 1 的范围
+    const gyroX = MathUtils.clamp(gamma || 0, -90, 90) / 90
+    const gyroY = MathUtils.clamp(beta || 0, -90, 90) / 90
+
+    // 结合鼠标和陀螺仪输入
+    const combinedX = state.pointer.x * (1 - gyroFactor) + gyroX * gyroFactor
+    const combinedY = state.pointer.y * (1 - gyroFactor) + gyroY * gyroFactor
+
+    movement.lerp(temp.set(combinedX, combinedY * 0.2, 0), 0.2)
     if (!group.current) return
     group.current.position.x = MathUtils.lerp(
       group.current.position.x,
-      state.pointer.x * 20,
+      combinedX * 20,
       0.05
     )
     group.current.rotation.x = MathUtils.lerp(
       group.current.rotation.x,
-      state.pointer.y / 20,
+      combinedY / 20,
       0.05
     )
     group.current.rotation.y = MathUtils.lerp(
       group.current.rotation.y,
-      -state.pointer.x / 2,
+      -combinedX / 2,
       0.05
     )
     // layersRef.current[4].uniforms.time.value =
@@ -224,6 +239,49 @@ const LYRICS = getRandomLyrics()
 export default function Scene() {
   const [error, setError] = useState<Error | null>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [gyroscope, setGyroscope] = useState({ alpha: 0, beta: 0, gamma: 0 })
+
+  useEffect(() => {
+    const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+      const { alpha, beta, gamma } = event
+      setGyroscope({ alpha: alpha || 0, beta: beta || 0, gamma: gamma || 0 })
+    }
+
+    const requestPermission = () => {
+      if (
+        typeof (DeviceOrientationEvent as any).requestPermission === 'function'
+      ) {
+        ;(DeviceOrientationEvent as any)
+          .requestPermission()
+          .then((permissionState: string) => {
+            if (permissionState === 'granted') {
+              window.addEventListener(
+                'deviceorientation',
+                handleDeviceOrientation,
+                true
+              )
+            }
+          })
+          .catch(console.error)
+      } else {
+        window.addEventListener(
+          'deviceorientation',
+          handleDeviceOrientation,
+          true
+        )
+      }
+    }
+
+    requestPermission()
+
+    return () => {
+      window.removeEventListener(
+        'deviceorientation',
+        handleDeviceOrientation,
+        true
+      )
+    }
+  }, [])
 
   // 使用useCallback来稳定回调函数引用
   const handleMousePositionChange = useCallback(
@@ -243,7 +301,7 @@ export default function Scene() {
         onError={setError}
         onMousePositionChange={handleMousePositionChange}
       >
-        <Experience />
+        <Experience gyroscope={gyroscope} />
         <Effects />
       </Canvas>
       <DialogBox loop={true} messages={LYRICS} mousePosition={mousePosition} />
