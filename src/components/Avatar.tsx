@@ -80,12 +80,12 @@ const Avatar: React.FC<AvatarProps> = ({
   const isCarouselMode = images && images.length > 1
   
   // 获取当前显示的图片
-  const getCurrentImage = (): string | undefined => {
-    if (isCarouselMode) {
-      return images[currentImageIndex]
-    }
-    return src
-  }
+  // const getCurrentImage = (): string | undefined => {
+  //   if (isCarouselMode) {
+  //     return images[currentImageIndex]
+  //   }
+  //   return src
+  // }
 
   // 轮播逻辑
   const nextImage = () => {

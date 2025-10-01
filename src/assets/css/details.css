@@ -10,7 +10,7 @@ span.header-left {
   line-height: 1em;
 }
 
-.nav {
+.github {
   align-items: center;
   display: flex;
   gap: 16px;
@@ -21,17 +21,16 @@ span.header-left {
   top: 40px;
 }
 
-.nav a {
+.github a {
   position: relative;
-  flex: 0 0 auto;
 }
 
-a.bottom-left {
+a.source-left {
   bottom: 40px;
   left: 40px;
 }
 
-a.bottom-right {
+a.source-right {
   bottom: 40px;
   right: 40px;
 }

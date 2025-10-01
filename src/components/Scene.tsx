@@ -6,7 +6,7 @@ import {
   ReactNode,
   useCallback,
   useMemo,
-  useEffect
+  useEffect,
 } from 'react'
 import {
   createRoot,
@@ -49,7 +49,11 @@ interface LayerConfig {
   scale: [number, number, number]
 }
 
-function Experience({ gyroscope }: { gyroscope: { alpha: number; beta: number; gamma: number } }) {
+function Experience({
+  gyroscope,
+}: {
+  gyroscope: { alpha: number; beta: number; gamma: number }
+}) {
   const scaleN = useAspect(1600, 1000, 1.05)
   const scaleW = useAspect(1600, 1000, 1.05)
   const textures = useTexture([
@@ -114,7 +118,7 @@ function Experience({ gyroscope }: { gyroscope: { alpha: number; beta: number; g
     const isMobileDevice = isMobile()
 
     // 陀螺仪影响因子
-    const gyroFactor = isMobileDevice ? 1 : 0
+    const gyroFactor = isMobileDevice ? 1.5 : 0
 
     // 将陀螺仪数据映射到 -1 到 1 的范围
     const gyroX = MathUtils.clamp(gamma || 0, -90, 90) / 90
