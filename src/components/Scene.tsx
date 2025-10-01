@@ -114,7 +114,7 @@ function Experience({ gyroscope }: { gyroscope: { alpha: number; beta: number; g
     const isMobileDevice = isMobile()
 
     // 陀螺仪影响因子
-    const gyroFactor = isMobileDevice ? 0.4 : 0
+    const gyroFactor = isMobileDevice ? 1 : 0
 
     // 将陀螺仪数据映射到 -1 到 1 的范围
     const gyroX = MathUtils.clamp(gamma || 0, -90, 90) / 90
