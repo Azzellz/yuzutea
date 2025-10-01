@@ -24,6 +24,7 @@ const InfoBox = memo((props: InfoBoxProps) => {
       const sortedGames = data.recently_games.games.sort(
         (a: any, b: any) => b.playtime_forever - a.playtime_forever
       )
+      setGames(sortedGames)
       setInfos((prev) => {
         return prev.map((item) => {
           if (item.title === 'Game') {
@@ -38,7 +39,6 @@ const InfoBox = memo((props: InfoBoxProps) => {
           return item
         })
       })
-      setGames(sortedGames)
     } catch (error) {
       console.error('获取游戏列表失败', error)
     }
@@ -53,13 +53,13 @@ const InfoBox = memo((props: InfoBoxProps) => {
       className="info-box"
       style={{ transform: transformStyle }}
     >
-      <div className="options">
+      <div className="options" style={{ gap: INFO_BOX.iconGap }}>
         {infos.map((item, i) => {
           const marginRight =
             (infos.length - i) * (INFO_BOX.iconWidth + INFO_BOX.iconGap) +
             INFO_BOX.iconWidth
           const selectedTranslateX =
-            parentWidth - marginRight + 2 * INFO_BOX.padding
+            parentWidth - marginRight + INFO_BOX.iconWidth
           const unselectedTranslateX =
             i < index ? INFO_BOX.iconWidth + INFO_BOX.iconGap : 0
 

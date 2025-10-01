@@ -7,3 +7,4 @@ export interface Game {
   playtime_forever: number
 }
 export const gameAtom = atom<Game[]>([])
+

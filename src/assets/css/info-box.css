@@ -23,10 +23,11 @@
 .info-box .options {
   position: relative;
   top: -50px;
+  height: 50px;
   margin-bottom: -40px;
   display: flex;
   justify-content: end;
-  gap: 10px;
+  align-items: end;
 }
 
 /* Responsive design for info box */
