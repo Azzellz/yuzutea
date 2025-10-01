@@ -6,6 +6,7 @@ import { INFO_BOX } from '@/consts/layout'
 import { useAtom } from 'jotai'
 import { gameAtom } from '@/atoms/game'
 import { infoAtom } from '@/atoms/info'
+import { layoutAtom } from '@/atoms/layout'
 
 interface InfoBoxProps extends TraceTransformHookProps {}
 const InfoBox = memo((props: InfoBoxProps) => {
@@ -17,6 +18,8 @@ const InfoBox = memo((props: InfoBoxProps) => {
   // 初始化游戏列表
   const [, setGames] = useAtom(gameAtom)
   const [, setInfos] = useAtom(infoAtom)
+  const [layout] = useAtom(layoutAtom)
+
   const getGames = useCallback(async () => {
     try {
       const res = await fetch('https://api.yuzutea.org/steam-web')
@@ -53,15 +56,15 @@ const InfoBox = memo((props: InfoBoxProps) => {
       className="info-box"
       style={{ transform: transformStyle }}
     >
-      <div className="options" style={{ gap: INFO_BOX.iconGap }}>
+      <div className="options" style={{ gap: layout.iconGap }}>
         {infos.map((item, i) => {
           const marginRight =
-            (infos.length - i) * (INFO_BOX.iconWidth + INFO_BOX.iconGap) +
-            INFO_BOX.iconWidth
+            (infos.length - i) * (layout.iconWidth + layout.iconGap) +
+            layout.iconWidth
           const selectedTranslateX =
-            parentWidth - marginRight + INFO_BOX.iconWidth
+            parentWidth - marginRight + layout.iconWidth
           const unselectedTranslateX =
-            i < index ? INFO_BOX.iconWidth + INFO_BOX.iconGap : 0
+            i < index ? layout.iconWidth + layout.iconGap : 0
 
           return (
             <Avatar
