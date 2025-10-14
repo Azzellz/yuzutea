@@ -125,3 +125,20 @@ export function useParentLayout<T extends HTMLDivElement>() {
   }
 }
 
+export function useElementRects() {
+  const [rects, setRects] = useState<DOMRectList>()
+  const [el, setEl] = useState<HTMLElement | null>(null)
+
+  useLayoutEffect(() => {
+    if (el) {
+      setRects(el.getClientRects())
+      console.log(el.getClientRects())
+    }
+  }, [el, setEl])
+
+  return {
+    rects,
+    el,
+    setEl,
+  }
+}

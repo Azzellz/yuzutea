@@ -14,12 +14,13 @@ interface InfoBoxProps extends TraceTransformHookProps {}
 const InfoBox = memo((props: InfoBoxProps) => {
   const { transformStyle } = useTraceTransform(props)
   const [index, setIndex] = useState(0)
-  const { parentRef, parentWidth } = useParentLayout<HTMLDivElement>()
+  const { parentRef, parentWidth, parentHeight } =
+    useParentLayout<HTMLDivElement>()
   const [infos] = useAtom(infoAtom)
 
   // 初始化游戏列表
   const [, setGames] = useAtom(gameAtom)
-  const [layout] = useAtom(layoutAtom)
+  const [layout, setLayout] = useAtom(layoutAtom)
 
   const getGames = useCallback(async () => {
     try {
@@ -73,11 +74,25 @@ const InfoBox = memo((props: InfoBoxProps) => {
     getAnimations()
   }, [])
 
+  useEffect(() => {
+    const rects = parentRef.current?.getClientRects()
+    if (rects) {
+      setLayout((prev) => ({
+        ...prev,
+        infoBoxRect: rects[0],
+      }))
+    }
+  }, [])
+
+  const baseHeight = 275
+  const parentTopOffset =
+    parentHeight > baseHeight ? baseHeight - parentHeight * 0.1 : baseHeight
+
   return (
     <div
       ref={parentRef}
       className="info-box"
-      style={{ transform: transformStyle }}
+      style={{ transform: transformStyle, top: parentTopOffset + 'px' }}
     >
       <div className="options" style={{ gap: layout.iconGap }}>
         {infos.map((item, i) => {
@@ -117,7 +132,12 @@ const InfoBox = memo((props: InfoBoxProps) => {
       <div className="title">
         <h2>{infos[index].title}</h2>
       </div>
-      <div className="content">{infos[index].content}</div>
+      <div
+        className="content"
+        style={{ overflow: 'auto', maxHeight: baseHeight - 100 }}
+      >
+        {infos[index].content}
+      </div>
     </div>
   )
 })
