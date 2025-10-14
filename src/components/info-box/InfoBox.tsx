@@ -7,6 +7,7 @@ import { useAtom } from 'jotai'
 import { gameAtom } from '@/atoms/game'
 import { infoAtom } from '@/atoms/info'
 import { layoutAtom } from '@/atoms/layout'
+import { artistAtom, musicAtom } from '@/atoms/music'
 
 interface InfoBoxProps extends TraceTransformHookProps {}
 const InfoBox = memo((props: InfoBoxProps) => {
@@ -17,7 +18,6 @@ const InfoBox = memo((props: InfoBoxProps) => {
 
   // 初始化游戏列表
   const [, setGames] = useAtom(gameAtom)
-  const [, setInfos] = useAtom(infoAtom)
   const [layout] = useAtom(layoutAtom)
 
   const getGames = useCallback(async () => {
@@ -28,27 +28,34 @@ const InfoBox = memo((props: InfoBoxProps) => {
         (a: any, b: any) => b.playtime_forever - a.playtime_forever
       )
       setGames(sortedGames)
-      setInfos((prev) => {
-        return prev.map((item) => {
-          if (item.title === 'Game') {
-            return {
-              ...item,
-              images: sortedGames.map(
-                (game: any) =>
-                  `//media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
-              ),
-            }
-          }
-          return item
-        })
-      })
     } catch (error) {
       console.error('获取游戏列表失败', error)
     }
   }, [setGames])
+
+  // 初始化音乐列表
+  const [, setMusic] = useAtom(musicAtom)
+  const [, setArtists] = useAtom(artistAtom)
+  const getMusic = useCallback(async () => {
+    try {
+      const res = await fetch(
+        'https://ncm-api-exv6dxrlyq.yuzutea.org/listen/data/report'
+      )
+      const data = await res.json()
+
+      const artists = data.data?.topArtistBlock?.sections
+      const musicItems = data.data?.wallpaperBlock?.items?.slice(0, 5) || []
+      setArtists(artists)
+      setMusic(musicItems)
+    } catch (error) {
+      console.error('获取音乐列表失败', error)
+    }
+  }, [setArtists, setMusic])
+
   useEffect(() => {
     getGames()
-  }, [getGames])
+    getMusic()
+  }, [])
 
   return (
     <div
