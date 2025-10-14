@@ -1,14 +1,30 @@
-import { useTyped } from '@/hooks/typed'
+import { animationAtom } from '@/atoms/animation'
+import { Avatar } from 'antd'
+import { useAtomValue } from 'jotai'
 
 export default function Animation() {
-  const { el } = useTyped({
-    messages: [
-      '1.FULLMETAL ALCHEMIST: ^500 ♥♥♥♥♥\n2.Made in abyss: ^500 ♥♥♥♥♥\n3.Overload: ^500 ♥♥♥♥♥\n4.Ajin: ^500 ♥♥♥♥♥',
-    ],
-  })
+  const animations = useAtomValue(animationAtom)
+
   return (
-    <div style={{ whiteSpace: 'pre-line', lineHeight: '1.6' }}>
-      <span ref={el}></span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {animations.map((item) => (
+        <div
+          key={item.id}
+          style={{ display: 'flex', gap: '12px', alignItems: 'center' }}
+        >
+          <Avatar
+            src={item.images.common}
+            alt={item.name}
+            shape="square"
+            size={36}
+          />
+          <span style={{ color: 'orange' }}>{item.name}</span>
+          <span> - </span>
+          <span style={{ color: '#d294f7', fontSize: '18px' }}>
+            {item.score}
+          </span>
+        </div>
+      ))}
     </div>
   )
 }

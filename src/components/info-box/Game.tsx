@@ -7,21 +7,23 @@ export default function Game() {
   const avatarPrefix =
     '//media.steampowered.com/steamcommunity/public/images/apps/'
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {games.map((game) => (
         <div
           key={game.appid}
-          style={{ display: 'flex', alignItems: 'center', gap: 10 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 12 }}
         >
           <Avatar
             src={`${avatarPrefix}${game.appid}/${game.img_icon_url}.jpg`}
             alt={game.name}
-            size="small"
-            shape="rounded"
+            size={36}
+            shape="square"
           />
-          <span>{game.name}</span>
+          <span style={{ color: '#db42b4' }}>{game.name}</span>
           <span> - </span>
-          <span>{Math.floor(game.playtime_forever / 60)}h</span>
+          <span style={{ color: '#51839c' }}>
+            {Math.floor(game.playtime_forever / 60)}h
+          </span>
         </div>
       ))}
     </div>

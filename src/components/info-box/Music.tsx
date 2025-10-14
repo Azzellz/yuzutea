@@ -23,17 +23,25 @@ export default function Music() {
     getMusic()
   }, [setMusic])
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {music.map((item) => (
         <div
           key={item.songId}
           style={{ display: 'flex', gap: '12px', alignItems: 'center' }}
         >
-          <Avatar src={item.picUrl} alt={item.songName} size="small" />
+          <Avatar
+            src={item.picUrl}
+            alt={item.songName}
+            size={36}
+            shape="square"
+          />
           <div>
-            {item.songName}
+            <span style={{ color: '#f8c1fa' }}>{item.songName}</span>
+            <span> - </span>
             {item.artists.map((artist) => (
-              <span key={artist.artistId}>{artist.artistName}</span>
+              <span key={artist.artistId} style={{ color: '#9982D4' }}>
+                {artist.artistName}
+              </span>
             ))}
           </div>
         </div>

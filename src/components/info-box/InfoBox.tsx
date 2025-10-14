@@ -8,6 +8,7 @@ import { gameAtom } from '@/atoms/game'
 import { infoAtom } from '@/atoms/info'
 import { layoutAtom } from '@/atoms/layout'
 import { artistAtom, musicAtom } from '@/atoms/music'
+import { animationAtom } from '@/atoms/animation'
 
 interface InfoBoxProps extends TraceTransformHookProps {}
 const InfoBox = memo((props: InfoBoxProps) => {
@@ -52,9 +53,24 @@ const InfoBox = memo((props: InfoBoxProps) => {
     }
   }, [setArtists, setMusic])
 
+  // 初始化动画列表
+  const [, setAnimations] = useAtom(animationAtom)
+  const getAnimations = useCallback(async () => {
+    try {
+      const res = await fetch(
+        'https://bangumi-api.yuzutea.org/v0/users/1138478/collections?subject_type=2&type=3&limit=30&offset=0'
+      )
+      const data = await res.json()
+      setAnimations(data.data?.map((item: any) => item.subject) || [])
+    } catch (error) {
+      console.error('获取动画列表失败', error)
+    }
+  }, [setAnimations])
+
   useEffect(() => {
     getGames()
     getMusic()
+    getAnimations()
   }, [])
 
   return (
@@ -82,6 +98,8 @@ const InfoBox = memo((props: InfoBoxProps) => {
               shape="rounded"
               onClick={() => setIndex(i)}
               size={INFO_BOX.iconWidth}
+              showIndicators={false}
+              showControls={false}
               style={{
                 border: index === i ? '2px solid #fff' : 'none',
                 transition: 'all 0.3s ease-out',

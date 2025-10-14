@@ -27,7 +27,7 @@ interface AvatarProps {
   className?: string
   /** 点击事件 */
   onClick?: () => void
-  
+
   // 轮播相关属性
   /** 是否自动播放轮播 */
   autoPlay?: boolean
@@ -77,8 +77,8 @@ const Avatar: React.FC<AvatarProps> = ({
   const containerRef = useRef<HTMLDivElement>(null)
 
   // 判断是否为轮播模式
-  const isCarouselMode = images && images.length > 1
-  
+  const isCarouselMode = images && images.length >= 1
+
   // 获取当前显示的图片
   // const getCurrentImage = (): string | undefined => {
   //   if (isCarouselMode) {
@@ -90,7 +90,7 @@ const Avatar: React.FC<AvatarProps> = ({
   // 轮播逻辑
   const nextImage = () => {
     if (!isCarouselMode) return
-    
+
     const nextIndex = (currentImageIndex + 1) % images.length
     setCurrentImageIndex(nextIndex)
     onImageChange?.(nextIndex, images[nextIndex])
@@ -99,7 +99,7 @@ const Avatar: React.FC<AvatarProps> = ({
   // 跳转到指定图片
   const goToImage = (index: number) => {
     if (!isCarouselMode || index < 0 || index >= images.length) return
-    
+
     setCurrentImageIndex(index)
     onImageChange?.(index, images[index])
   }
@@ -107,8 +107,9 @@ const Avatar: React.FC<AvatarProps> = ({
   // 上一张图片
   const prevImage = () => {
     if (!isCarouselMode) return
-    
-    const prevIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1
+
+    const prevIndex =
+      currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1
     setCurrentImageIndex(prevIndex)
     onImageChange?.(prevIndex, images[prevIndex])
   }
@@ -121,11 +122,11 @@ const Avatar: React.FC<AvatarProps> = ({
   // 开始轮播
   const startCarousel = () => {
     if (!isCarouselMode || !isPlaying || isPaused) return
-    
+
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
     }
-    
+
     intervalRef.current = setInterval(nextImage, interval)
   }
 
@@ -170,7 +171,7 @@ const Avatar: React.FC<AvatarProps> = ({
   // 获取尺寸值
   const getSizeValue = (size: AvatarSize): number => {
     if (typeof size === 'number') return size
-    
+
     const sizeMap = {
       small: 32,
       medium: 50,
@@ -218,7 +219,10 @@ const Avatar: React.FC<AvatarProps> = ({
     height: '100%',
     objectFit: 'cover',
     display: 'block',
-    transition: transition === 'fade' ? `opacity ${transitionDuration}ms ease-in-out` : 'none',
+    transition:
+      transition === 'fade'
+        ? `opacity ${transitionDuration}ms ease-in-out`
+        : 'none',
   }
 
   // 轮播图片容器样式
@@ -236,8 +240,12 @@ const Avatar: React.FC<AvatarProps> = ({
     top: 0,
     left: 0,
     opacity: 1,
-    transition: transition === 'fade' ? `opacity ${transitionDuration}ms ease-in-out` : 
-               transition === 'slide' ? `transform ${transitionDuration}ms ease-in-out` : 'none',
+    transition:
+      transition === 'fade'
+        ? `opacity ${transitionDuration}ms ease-in-out`
+        : transition === 'slide'
+        ? `transform ${transitionDuration}ms ease-in-out`
+        : 'none',
   }
 
   // 控制按钮样式
@@ -316,10 +324,16 @@ const Avatar: React.FC<AvatarProps> = ({
             alt={`${alt} ${index + 1}`}
             style={{
               ...carouselImageStyle,
-              opacity: transition === 'fade' ? (index === currentImageIndex ? 1 : 0) : 1,
-              transform: transition === 'slide' 
-                ? `translateX(${(index - currentImageIndex) * 100}%)` 
-                : 'none',
+              opacity:
+                transition === 'fade'
+                  ? index === currentImageIndex
+                    ? 1
+                    : 0
+                  : 1,
+              transform:
+                transition === 'slide'
+                  ? `translateX(${(index - currentImageIndex) * 100}%)`
+                  : 'none',
               zIndex: index === currentImageIndex ? 1 : 0,
             }}
             onError={index === currentImageIndex ? handleImageError : undefined}
@@ -388,7 +402,10 @@ const Avatar: React.FC<AvatarProps> = ({
             key={index}
             style={{
               ...indicatorStyle,
-              backgroundColor: index === currentImageIndex ? 'white' : 'rgba(255, 255, 255, 0.5)',
+              backgroundColor:
+                index === currentImageIndex
+                  ? 'white'
+                  : 'rgba(255, 255, 255, 0.5)',
             }}
             onClick={(e) => {
               e.stopPropagation()
@@ -405,12 +422,14 @@ const Avatar: React.FC<AvatarProps> = ({
     <div
       ref={containerRef}
       className={`avatar ${className || ''}`.trim()}
-      style={{
-        ...avatarStyle,
-        '&:hover .avatarControls': {
-          opacity: 1,
-        }
-      } as CSSProperties}
+      style={
+        {
+          ...avatarStyle,
+          '&:hover .avatarControls': {
+            opacity: 1,
+          },
+        } as CSSProperties
+      }
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -420,13 +439,15 @@ const Avatar: React.FC<AvatarProps> = ({
       {isCarouselMode ? (
         <>
           {renderCarouselImages()}
-          <div 
+          <div
             className="avatar-controls"
-            style={{ 
-              opacity: showControls ? 1 : 0,
-              transition: 'opacity 0.3s ease',
-              '&:hover': { opacity: 1 }
-            } as CSSProperties}
+            style={
+              {
+                opacity: showControls ? 1 : 0,
+                transition: 'opacity 0.3s ease',
+                '&:hover': { opacity: 1 },
+              } as CSSProperties
+            }
           >
             {renderControls()}
           </div>
