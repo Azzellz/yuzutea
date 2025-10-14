@@ -22,7 +22,7 @@ const InfoBox = memo((props: InfoBoxProps) => {
 
   const getGames = useCallback(async () => {
     try {
-      const res = await fetch('https://api.yuzutea.org/steam-web')
+      const res = await fetch('https://steam-api.yuzutea.org')
       const data = await res.json()
       const sortedGames = data.recently_games.games.sort(
         (a: any, b: any) => b.playtime_forever - a.playtime_forever
