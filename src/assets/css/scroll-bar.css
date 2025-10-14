@@ -1,0 +1,55 @@
+/* ======================
+   像素风滚动条
+   ====================== */
+
+/* 滚动条轨道（背景） */
+::-webkit-scrollbar {
+  width: 16px; /* 纵向滚动条宽度 */
+  height: 16px; /* 横向滚动条高度 */
+  background: #c6c6c6; /* 8-bit 经典浅灰 */
+  image-rendering: pixelated;
+}
+
+/* 轨道两侧“边框” */
+::-webkit-scrollbar-track {
+  border: 4px solid #000; /* 纯黑描边 = 像素框 */
+  background: #c6c6c6;
+}
+
+/* 滑块本身 */
+::-webkit-scrollbar-thumb {
+  background: #9982D4; /* 萌萌的像素粉 */
+  border: 4px solid #000; /* 黑色描边 */
+  image-rendering: pixelated;
+}
+
+/* 滑块悬停 */
+::-webkit-scrollbar-thumb:hover {
+  background: #9982D4;
+}
+
+/* 滑块按下 */
+::-webkit-scrollbar-thumb:active {
+  background: #9982D4;
+}
+
+/* 两端按钮（可选） */
+::-webkit-scrollbar-button {
+  width: 16px;
+  height: 16px;
+  background: #8c8c8c;
+  border: 4px solid #000;
+  image-rendering: pixelated;
+}
+
+/* 上/左按钮 */
+::-webkit-scrollbar-button:vertical:start,
+::-webkit-scrollbar-button:horizontal:start {
+  background: #8c8c8c;
+}
+
+/* 下/右按钮 */
+::-webkit-scrollbar-button:vertical:end,
+::-webkit-scrollbar-button:horizontal:end {
+  background: #8c8c8c;
+}

@@ -3,7 +3,6 @@
   animation: dialogGlow 2s ease-in-out infinite alternate;
 
   position: fixed;
-  top: 35%;
   right: 175px;
   max-width: 800px;
   min-width: 400px;
@@ -16,7 +15,7 @@
   font-size: 16px;
   line-height: 1.5;
   z-index: 1000;
-  transition: transform 0.1s ease-out;
+  transition: all 0.1s ease-out;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
