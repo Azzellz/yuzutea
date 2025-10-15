@@ -1,8 +1,8 @@
-import { artistAtom, musicAtom, Music } from '@/atoms/music'
+import { artistAtom, musicAtom, Music, musicPlayerAtom } from '@/atoms/music'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import Avatar from '../Avatar'
-import { getMusic } from '@/utils/music'
+import { getMusicPlayer } from '@/utils/music'
 
 function MusicLine({
   item,
@@ -38,6 +38,7 @@ function MusicLine({
 
 export default function MusicPanel() {
   const [music, setMusic] = useAtom(musicAtom)
+  const [musicPlayer, setMusicPlayer] = useAtom(musicPlayerAtom)
   const [, setArtists] = useAtom(artistAtom)
   const getMusicList = async () => {
     try {
@@ -57,16 +58,35 @@ export default function MusicPanel() {
   }, [setMusic])
 
   async function handlePlayMusic(musicId: number) {
-    const { audio } = await getMusic(musicId)
-    if (audio) {
-      audio.play()
+    // 删除之前的音乐播放器
+    if (musicPlayer) {
+      musicPlayer.audio.pause()
+      musicPlayer.audio.currentTime = 0
+      musicPlayer.audio.remove()
+    }
+
+    const player = await getMusicPlayer(musicId)
+    setMusicPlayer(player)
+    if (player.audio) {
+      player.audio.play()
     }
   }
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      {music.map((item) => (
-        <MusicLine key={item.songId} item={item} onClick={handlePlayMusic} />
-      ))}
+    <div className="panel">
+      <h2>MUSIC</h2>
+      <div
+        className="content"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+          maxHeight: '200px',
+        }}
+      >
+        {music.map((item) => (
+          <MusicLine key={item.songId} item={item} onClick={handlePlayMusic} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -64,7 +64,7 @@ async function getLyric(musicId: number) {
   return parseLrc(lyric)
 }
 
-export async function getMusic(
+export async function getMusicPlayer(
   musicId: number,
   level: MusicLevel = 'standard'
 ) {

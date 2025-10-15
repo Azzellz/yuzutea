@@ -1,7 +1,6 @@
 .info-box {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   animation: dialogGlow 2s ease-in-out infinite alternate;
-
   position: fixed;
   right: 175px;
   max-width: 800px;
@@ -17,16 +16,22 @@
   z-index: 1000;
   transition: all 0.1s ease-out;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
 
-.info-box .options {
-  position: relative;
-  top: -50px;
-  height: 50px;
-  margin-bottom: -40px;
-  display: flex;
-  justify-content: end;
-  align-items: end;
+  .options {
+    position: relative;
+    top: -50px;
+    height: 50px;
+    margin-bottom: -40px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .panel {
+    padding-block: 20px;
+    .content {
+      overflow: auto;
+    }
+  }
 }
 
 /* Responsive design for info box */

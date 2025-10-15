@@ -129,13 +129,7 @@ const InfoBox = memo((props: InfoBoxProps) => {
           )
         })}
       </div>
-      <div className="title">
-        <h2>{infos[index].title}</h2>
-      </div>
-      <div
-        className="content"
-        style={{ overflow: 'auto', maxHeight: baseHeight - 100 }}
-      >
+      <div className="content">
         {infos[index].content}
       </div>
     </div>
