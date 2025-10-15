@@ -29,8 +29,6 @@ import starsUrl from '@/assets/image/stars.png'
 import groundUrl from '@/assets/image/ground.png'
 import characterPcUrl from '@/assets/image/character-pc.png'
 import characterMobileUrl from '@/assets/image/character-mobile.png'
-import bg1Url from '@/assets/image/bg1.png'
-import bg2Url from '@/assets/image/bg2.png'
 import '@/materials/layerMaterial'
 import { DomEvent } from '@react-three/fiber/dist/declarations/src/core/events'
 import InfoBox from '../info-box/InfoBox'
@@ -61,8 +59,6 @@ function Experience({
     starsUrl,
     groundUrl,
     isMobile() ? characterMobileUrl : characterPcUrl,
-    bg1Url,
-    bg2Url,
   ])
   const group = useRef<Group>(null)
   const layersRef = useRef<any[]>([])
