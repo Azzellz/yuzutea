@@ -1,10 +1,9 @@
 import Details from './components/Details'
-import Scene from './components/Scene'
+import Scene from './components/r3f/Scene'
 import { RippleProvider } from './contexts/RippleContext'
-import RippleRenderer from './components/RippleRenderer'
+import RippleRenderer from './components/r3f/RippleRenderer'
 
 export default function App() {
-
   return (
     <RippleProvider>
       <Scene />
