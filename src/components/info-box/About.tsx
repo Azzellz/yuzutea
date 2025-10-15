@@ -1,6 +1,6 @@
 import { useTyped } from '@/hooks/typed'
 
-export default function About() {
+export default function AboutPanel() {
   const { el } = useTyped({
     messages: [
       'Yuzutea^1000\nA FE-Programmer, love ACGN culture.^1000\nずっとプログラミングでいいのに。',

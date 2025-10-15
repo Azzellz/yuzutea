@@ -2,7 +2,7 @@ import { gameAtom } from '@/atoms/game'
 import Avatar from '../Avatar'
 import { useAtom } from 'jotai'
 
-export default function Game() {
+export default function GamePanel() {
   const [games] = useAtom(gameAtom)
   const avatarPrefix =
     '//media.steampowered.com/steamcommunity/public/images/apps/'

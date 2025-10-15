@@ -1,8 +1,8 @@
-import About from '@/components/info-box/About'
-import Contact from '@/components/info-box/Contact'
-import Game from '@/components/info-box/Game'
-import Animation from '@/components/info-box/Animation'
-import Music from '@/components/info-box/Music'
+import AboutPanel from '@/components/info-box/About'
+import ContactPanel from '@/components/info-box/Contact'
+import GamePanel from '@/components/info-box/Game'
+import AnimationPanel from '@/components/info-box/Animation'
+import MusicPanel from '@/components/info-box/Music'
 import { atom } from 'jotai'
 import { gameAtom } from './game'
 import { artistAtom } from './music'
@@ -17,12 +17,12 @@ export const infoAtom = atom((get) => {
     {
       src: '/images/icon/about.png',
       title: 'About',
-      content: <About />,
+      content: <AboutPanel />,
     },
     {
       src: '/images/icon/contact.png',
       title: 'Contact',
-      content: <Contact />,
+      content: <ContactPanel />,
     },
     {
       images: games.map(
@@ -30,18 +30,18 @@ export const infoAtom = atom((get) => {
           `//media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`
       ),
       title: 'Game',
-      content: <Game />,
+      content: <GamePanel />,
     },
 
     {
       images: artists.map((artist) => artist.picUrl),
       title: 'Music',
-      content: <Music />,
+      content: <MusicPanel />,
     },
     {
       images: animations.map((animation) => animation.images.common),
       title: 'Animation',
-      content: <Animation />,
+      content: <AnimationPanel />,
     },
   ]
 })

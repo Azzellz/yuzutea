@@ -2,7 +2,7 @@ import { animationAtom } from '@/atoms/animation'
 import { Avatar } from 'antd'
 import { useAtomValue } from 'jotai'
 
-export default function Animation() {
+export default function AnimationPanel() {
   const animations = useAtomValue(animationAtom)
 
   return (

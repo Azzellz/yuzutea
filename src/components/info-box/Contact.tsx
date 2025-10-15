@@ -1,7 +1,7 @@
 import { useTyped } from '@/hooks/typed'
 import { Popover } from 'antd'
 
-export default function Contact() {
+export default function ContactPanel() {
   const { el } = useTyped({
     messages: ['Email: flin00806@gmail.com'],
   })

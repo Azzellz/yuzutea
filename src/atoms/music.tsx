@@ -17,3 +17,10 @@ export interface Artist {
 }
 export const musicAtom = atom<Music[]>([])
 export const artistAtom = atom<Artist[]>([])
+
+export type LyricLine = { time: number; text: string }
+export interface MusicPlay {
+  url: string
+  lyrics: LyricLine[]
+}
+export const currentMusicAtom = atom<MusicPlay>()

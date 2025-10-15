@@ -1,12 +1,45 @@
-import { artistAtom, musicAtom } from '@/atoms/music'
+import { artistAtom, musicAtom, Music } from '@/atoms/music'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import Avatar from '../Avatar'
+import { getMusic } from '@/utils/music'
 
-export default function Music() {
+function MusicLine({
+  item,
+  onClick,
+}: {
+  item: Music
+  onClick: (musicId: number) => void
+}) {
+  return (
+    <div
+      key={item.songId}
+      style={{
+        display: 'flex',
+        gap: '12px',
+        alignItems: 'center',
+        cursor: 'pointer',
+      }}
+      onClick={() => onClick(item.songId)}
+    >
+      <Avatar src={item.picUrl} alt={item.songName} size={36} shape="square" />
+      <div>
+        <span style={{ color: '#f8c1fa' }}>{item.songName}</span>
+        <span> - </span>
+        {item.artists.map((artist) => (
+          <span key={artist.artistId} style={{ color: '#9982D4' }}>
+            {artist.artistName}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function MusicPanel() {
   const [music, setMusic] = useAtom(musicAtom)
   const [, setArtists] = useAtom(artistAtom)
-  const getMusic = async () => {
+  const getMusicList = async () => {
     try {
       const res = await fetch(
         'https://ncm-api-exv6dxrlyq.yuzutea.org/listen/data/report'
@@ -20,31 +53,19 @@ export default function Music() {
     }
   }
   useEffect(() => {
-    getMusic()
+    getMusicList()
   }, [setMusic])
+
+  async function handlePlayMusic(musicId: number) {
+    const { audio } = await getMusic(musicId)
+    if (audio) {
+      audio.play()
+    }
+  }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {music.map((item) => (
-        <div
-          key={item.songId}
-          style={{ display: 'flex', gap: '12px', alignItems: 'center' }}
-        >
-          <Avatar
-            src={item.picUrl}
-            alt={item.songName}
-            size={36}
-            shape="square"
-          />
-          <div>
-            <span style={{ color: '#f8c1fa' }}>{item.songName}</span>
-            <span> - </span>
-            {item.artists.map((artist) => (
-              <span key={artist.artistId} style={{ color: '#9982D4' }}>
-                {artist.artistName}
-              </span>
-            ))}
-          </div>
-        </div>
+        <MusicLine key={item.songId} item={item} onClick={handlePlayMusic} />
       ))}
     </div>
   )
