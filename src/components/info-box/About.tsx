@@ -7,8 +7,11 @@ export default function AboutPanel() {
     ],
   })
   return (
-    <div style={{ whiteSpace: 'pre-line', lineHeight: '1.6' }}>
-      <span ref={el}></span>
+    <div className="panel">
+      <h2>ABOUT ME.</h2>
+      <div style={{ whiteSpace: 'pre-line', lineHeight: '1.6' }}>
+        <span ref={el}></span>
+      </div>
     </div>
   )
 }

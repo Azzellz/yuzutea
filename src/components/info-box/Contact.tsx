@@ -6,7 +6,8 @@ export default function ContactPanel() {
     messages: ['Email: flin00806@gmail.com'],
   })
   return (
-    <div style={{ whiteSpace: 'pre-line', lineHeight: '1.6' }}>
+    <div className="panel">
+      <h2>CONTACT</h2>
       <div
         style={{
           display: 'flex',

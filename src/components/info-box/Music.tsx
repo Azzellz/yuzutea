@@ -74,15 +74,7 @@ export default function MusicPanel() {
   return (
     <div className="panel">
       <h2>MUSIC</h2>
-      <div
-        className="content"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          maxHeight: '200px',
-        }}
-      >
+      <div className="content flex-col-list">
         {music.map((item) => (
           <MusicLine key={item.songId} item={item} onClick={handlePlayMusic} />
         ))}

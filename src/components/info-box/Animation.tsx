@@ -6,7 +6,8 @@ export default function AnimationPanel() {
   const animations = useAtomValue(animationAtom)
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <div className="panel">
+      <h2>ANIMATION</h2>
       {animations.map((item) => (
         <div
           key={item.id}
