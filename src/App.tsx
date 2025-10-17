@@ -2,11 +2,13 @@ import Details from './components/Details'
 import Scene from './components/r3f/Scene'
 import { RippleProvider } from './contexts/RippleContext'
 import RippleRenderer from './components/r3f/RippleRenderer'
+import LyricsAtmosphere from './components/LyricAtmosphere'
 
 export default function App() {
   return (
     <RippleProvider>
       <Scene />
+      <LyricsAtmosphere />
       <Details />
       {/* <AudioVisualizerDemo /> */}
       <RippleRenderer

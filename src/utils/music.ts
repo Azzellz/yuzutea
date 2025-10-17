@@ -72,6 +72,7 @@ export async function getMusicPlayer(
   const parsedLrc = await getLyric(musicId)
   const audio = new Audio(url)
   return {
+    songId: musicId,
     url,
     lyrics: parsedLrc.lyrics,
     audio,

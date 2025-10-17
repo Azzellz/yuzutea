@@ -26,5 +26,6 @@ export interface MusicPlayer {
   url: string
   lyrics: LyricLine[]
   audio: HTMLAudioElement
+  songId: number
 }
 export const musicPlayerAtom = atom<MusicPlayer>()
