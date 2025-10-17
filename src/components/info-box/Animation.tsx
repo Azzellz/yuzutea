@@ -11,7 +11,10 @@ export default function AnimationPanel() {
       {animations.map((item) => (
         <div
           key={item.id}
-          style={{ display: 'flex', gap: '12px', alignItems: 'center' }}
+          className="flex-h-center pointer"
+          onClick={() => {
+            window.open(`https://bangumi.tv/subject/${item.id}`)
+          }}
         >
           <Avatar
             src={item.images.common}
