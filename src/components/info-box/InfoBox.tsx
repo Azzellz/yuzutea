@@ -1,5 +1,5 @@
 import { TraceTransformHookProps, useTraceTransform } from '@/hooks/transform'
-import Avatar from '../Avatar'
+import InfoAvatar from './Avatar'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useParentLayout } from '@/hooks/layout'
 import { INFO_BOX } from '@/consts/layout'
@@ -105,7 +105,7 @@ const InfoBox = memo((props: InfoBoxProps) => {
             i < index ? layout.iconWidth + layout.iconGap : 0
 
           return (
-            <Avatar
+            <InfoAvatar
               key={item.title}
               alt={item.title}
               src={item.src}
@@ -129,9 +129,7 @@ const InfoBox = memo((props: InfoBoxProps) => {
           )
         })}
       </div>
-      <div className="content">
-        {infos[index].content}
-      </div>
+      <div className="content">{infos[index].content}</div>
     </div>
   )
 })

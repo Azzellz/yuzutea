@@ -1,5 +1,5 @@
 import { gameAtom } from '@/atoms/game'
-import Avatar from '../Avatar'
+import { Avatar } from 'antd'
 import { useAtom } from 'jotai'
 
 export default function GamePanel() {

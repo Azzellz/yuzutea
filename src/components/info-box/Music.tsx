@@ -1,7 +1,7 @@
 import { artistAtom, musicAtom, Music, musicPlayerAtom } from '@/atoms/music'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
-import Avatar from '../Avatar'
+import { Avatar } from 'antd'
 import { getMusicPlayer } from '@/utils/music'
 import { Flex } from 'antd'
 import {

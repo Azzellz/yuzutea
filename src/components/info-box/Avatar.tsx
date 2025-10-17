@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef, CSSProperties } from 'react'
 
-export type AvatarShape = 'circle' | 'square' | 'rounded'
-export type AvatarSize = 'small' | 'medium' | 'large' | number
-export type CarouselTransition = 'fade' | 'slide' | 'none'
+type InfoAvatarShape = 'circle' | 'square' | 'rounded'
+type InfoAvatarSize = 'small' | 'medium' | 'large' | number
+type CarouselTransition = 'fade' | 'slide' | 'none'
 
-interface AvatarProps {
+interface InfoAvatarProps {
   /** 头像图片地址（单张图片模式） */
   src?: string
   /** 轮播图片数组（轮播模式） */
   images?: string[]
   /** 头像尺寸 */
-  size?: AvatarSize
+  size?: InfoAvatarSize
   /** 头像形状 */
-  shape?: AvatarShape
+  shape?: InfoAvatarShape
   /** 替代文本 */
   alt?: string
   /** 图片加载失败时的备用内容 */
@@ -47,7 +47,7 @@ interface AvatarProps {
   showIndicators?: boolean
 }
 
-const Avatar: React.FC<AvatarProps> = ({
+const InfoAvatar: React.FC<InfoAvatarProps> = ({
   src,
   images,
   size = 'medium',
@@ -169,7 +169,7 @@ const Avatar: React.FC<AvatarProps> = ({
   }, [])
 
   // 获取尺寸值
-  const getSizeValue = (size: AvatarSize): number => {
+  const getSizeValue = (size: InfoAvatarSize): number => {
     if (typeof size === 'number') return size
 
     const sizeMap = {
@@ -181,7 +181,7 @@ const Avatar: React.FC<AvatarProps> = ({
   }
 
   // 获取边框半径
-  const getBorderRadius = (shape: AvatarShape, size: number): string => {
+  const getBorderRadius = (shape: InfoAvatarShape, size: number): string => {
     switch (shape) {
       case 'circle':
         return '50%'
@@ -471,4 +471,4 @@ const Avatar: React.FC<AvatarProps> = ({
   )
 }
 
-export default Avatar
+export default InfoAvatar
