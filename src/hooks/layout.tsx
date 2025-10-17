@@ -132,7 +132,6 @@ export function useElementRects() {
   useLayoutEffect(() => {
     if (el) {
       setRects(el.getClientRects())
-      console.log(el.getClientRects())
     }
   }, [el, setEl])
 

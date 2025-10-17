@@ -1,5 +1,5 @@
 import { TraceTransformHookProps, useTraceTransform } from '@/hooks/transform'
-import InfoAvatar from './Avatar'
+import InfoAvatar from './InfoAvatar'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useParentLayout } from '@/hooks/layout'
 import { INFO_BOX } from '@/consts/layout'
