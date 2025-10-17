@@ -59,7 +59,7 @@ const InfoBox = memo((props: InfoBoxProps) => {
   const getAnimations = useCallback(async () => {
     try {
       const res = await fetch(
-        'https://bangumi-api.yuzutea.org/v0/users/1138478/collections?subject_type=2&type=3&limit=30&offset=0'
+        'https://bangumi-api.yuzutea.org/v0/users/1138478/collections?limit=30&offset=0'
       )
       const data = await res.json()
       setAnimations(data.data?.map((item: any) => item.subject) || [])
