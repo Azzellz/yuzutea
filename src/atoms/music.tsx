@@ -27,5 +27,6 @@ export interface MusicPlayer {
   lyrics: LyricLine[]
   audio: HTMLAudioElement
   songId: number
+  status: 'playing' | 'paused' | 'loading' | 'empty'
 }
 export const musicPlayerAtom = atom<MusicPlayer>()

@@ -1,4 +1,4 @@
-import { LyricLine } from '@/atoms/music'
+import { LyricLine, MusicPlayer } from '@/atoms/music'
 
 interface ParsedLRC {
   meta: LyricLine[] // 作词 / 作曲 / 制作人 等
@@ -67,7 +67,7 @@ async function getLyric(musicId: number) {
 export async function getMusicPlayer(
   musicId: number,
   level: MusicLevel = 'standard'
-) {
+): Promise<MusicPlayer> {
   const url = await getUrl(musicId, level)
   const parsedLrc = await getLyric(musicId)
   const audio = new Audio(url)
@@ -76,5 +76,6 @@ export async function getMusicPlayer(
     url,
     lyrics: parsedLrc.lyrics,
     audio,
+    status: 'loading',
   }
 }

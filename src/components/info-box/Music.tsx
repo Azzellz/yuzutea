@@ -1,6 +1,6 @@
 import { artistAtom, musicAtom, Music, musicPlayerAtom } from '@/atoms/music'
 import { useAtom } from 'jotai'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Avatar } from 'antd'
 import { getMusicPlayer } from '@/utils/music'
 import { Flex } from 'antd'
@@ -46,6 +46,52 @@ function MusicLine({
   )
 }
 
+function MusicControls() {
+  const [musicPlayer, setMusicPlayer] = useAtom(musicPlayerAtom)
+
+  function handleStartMusic() {
+    if (musicPlayer && musicPlayer.audio) {
+      musicPlayer.audio.play()
+      setMusicPlayer({ ...musicPlayer, status: 'playing' })
+    }
+  }
+
+  function handlePauseMusic() {
+    if (musicPlayer && musicPlayer.audio) {
+      musicPlayer.audio.pause()
+      setMusicPlayer({ ...musicPlayer, status: 'paused' })
+    }
+  }
+
+  function handleRestartMusic() {
+    if (musicPlayer && musicPlayer.audio) {
+      musicPlayer.audio.currentTime = 0
+      handleStartMusic()
+    }
+  }
+
+  if (!musicPlayer || !musicPlayer.audio) {
+    return null
+  }
+  if (musicPlayer.status === 'loading') {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <Flex style={{ marginTop: '-6px' }} gap={12}>
+      {musicPlayer.status === 'playing' ? (
+        <PauseOutlined style={{ fontSize: 28 }} onClick={handlePauseMusic} />
+      ) : (
+        <CaretRightOutlined
+          style={{ fontSize: 28 }}
+          onClick={handleStartMusic}
+        />
+      )}
+      <UndoOutlined style={{ fontSize: 22 }} onClick={handleRestartMusic} />
+    </Flex>
+  )
+}
+
 export default function MusicPanel() {
   const [music, setMusic] = useAtom(musicAtom)
   const [musicPlayer, setMusicPlayer] = useAtom(musicPlayerAtom)
@@ -75,57 +121,26 @@ export default function MusicPanel() {
       musicPlayer.audio.remove()
     }
 
+    // 获取新的音乐播放器
     const player = await getMusicPlayer(musicId)
     setMusicPlayer(player)
     if (player.audio) {
       player.audio.play()
-      setIsPlaying(true)
     }
-  }
-  function handleStartMusic() {
-    if (musicPlayer && musicPlayer.audio) {
-      musicPlayer.audio.play()
-      setIsPlaying(true)
+
+    // 加载完成后修改状态
+    const handleCanPlay = () => {
+      setMusicPlayer({ ...player, status: 'playing' })
+      player.audio.removeEventListener('canplay', handleCanPlay)
     }
-  }
-  function handlePauseMusic() {
-    if (musicPlayer && musicPlayer.audio) {
-      musicPlayer.audio.pause()
-      setIsPlaying(false)
-    }
-  }
-  function handleRestartMusic() {
-    if (musicPlayer && musicPlayer.audio) {
-      musicPlayer.audio.currentTime = 0
-      handleStartMusic()
-    }
+    player.audio.addEventListener('canplay', handleCanPlay)
   }
 
-  const [isPlaying, setIsPlaying] = useState(false)
-
-  const Controls = () => {
-    if (!musicPlayer || !musicPlayer.audio) {
-      return null
-    }
-    return (
-      <Flex style={{ marginTop: '-6px' }} gap={12}>
-        {isPlaying ? (
-          <PauseOutlined style={{ fontSize: 28 }} onClick={handlePauseMusic} />
-        ) : (
-          <CaretRightOutlined
-            style={{ fontSize: 28 }}
-            onClick={handleStartMusic}
-          />
-        )}
-        <UndoOutlined style={{ fontSize: 22 }} onClick={handleRestartMusic} />
-      </Flex>
-    )
-  }
   return (
     <div className="panel">
       <Flex align="center" gap={12}>
         <h2>MUSIC</h2>
-        <Controls />
+        <MusicControls />
       </Flex>
 
       <div className="content flex-col-list">
