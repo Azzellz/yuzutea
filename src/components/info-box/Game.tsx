@@ -9,11 +9,14 @@ export default function GamePanel() {
   return (
     <div className="panel">
       <h2>GAME</h2>
-      <div className="content flex-col-list">
+      <div className="content flex-v">
         {games.map((game) => (
           <div
             key={game.appid}
-            style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
+            className="flex-h-center pointer"
+            onClick={() => {
+              window.open(`https://store.steampowered.com/app/${game.appid}`)
+            }}
           >
             <Avatar
               src={`${avatarPrefix}${game.appid}/${game.img_icon_url}.jpg`}

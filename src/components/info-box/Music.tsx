@@ -143,7 +143,7 @@ export default function MusicPanel() {
         <MusicControls />
       </Flex>
 
-      <div className="content flex-col-list">
+      <div className="content flex-v">
         {music.map((item) => (
           <MusicLine
             key={item.songId}
